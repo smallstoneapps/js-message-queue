@@ -8,27 +8,6 @@ describe('MessageQueue', function () {
     done();
   });
 
-  describe('#_isValidMessage', function () {
-
-    it('should accept a valid appmessage object as the only argument', function (done) {
-      var success = queue._isValidMessage({ key1: 0, key2: 'this is a valid value', key3: [] });
-      expect(success).to.equal(true);
-      done();
-    });
-
-    it('should reject anything other than a valid appmessage object as the first argument', function (done) {
-      expect(queue._isValidMessage(5)).to.equal(false);
-      expect(queue._isValidMessage()).to.equal(false);
-      expect(queue._isValidMessage('')).to.equal(false);
-      expect(queue._isValidMessage([])).to.equal(false);
-      expect(queue._isValidMessage(null)).to.equal(false);
-      expect(queue._isValidMessage({ key1: {} })).to.equal(false);
-      expect(queue._isValidMessage({ key1: null })).to.equal(false);
-      done();
-    });
-
-  });
-
   describe('#queueLength', function () {
 
     it('should return 0 when no messages have been sent', function (done) {
@@ -61,6 +40,27 @@ describe('MessageQueue', function () {
   });
 
   describe('#sendMessage', function () {
+
+    it('should accept a valid appmessage object as the only argument', function (done) {
+      var success = queue.sendMessage({ key1: 0, key2: 'this is a valid value', key3: [] });
+      expect(success).to.equal(true);
+      setTimeout(function () {
+        done();
+      }, 10);
+    });
+
+    it('should reject anything other than a valid appmessage object as the first argument', function (done) {
+      expect(queue.sendMessage(5)).to.equal(false);
+      expect(queue.sendMessage()).to.equal(false);
+      expect(queue.sendMessage('')).to.equal(false);
+      expect(queue.sendMessage([])).to.equal(false);
+      expect(queue.sendMessage(null)).to.equal(false);
+      expect(queue.sendMessage({ key1: {} })).to.equal(false);
+      expect(queue.sendMessage({ key1: null })).to.equal(false);
+      setTimeout(function () {
+        done();
+      }, 500);
+    });
 
     it('sending a message should not break the tests', function (done) {
       var message = randomMessage();
@@ -175,6 +175,15 @@ describe('MessageQueue', function () {
         done();
       });
       window.Pebble.sendAppMessage(message);
+    });
+
+  });
+
+  describe('#cleanup', function () {
+
+    it('does not throw an error if called without injecting', function (done) {
+      queue.cleanup();
+      done();
     });
 
   });
