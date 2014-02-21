@@ -8,8 +8,15 @@ module.exports = function(config) {
       'test/*.js',
       'test/mocks/*.js'
     ],
+    preprocessors: {
+      'lib/*.js': 'coverage'
+    },
     exclude: [ ],
-    reporters: [ 'progress', 'osx' ],
+    reporters: [ 'progress', 'osx', 'coverage' ],
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage/'
+    },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
