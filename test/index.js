@@ -3,8 +3,8 @@ describe('MessageQueue', function () {
   var queue = null;
 
   beforeEach(function (done) {
-    queue = new MessageQueue();
     window.Pebble = new MockPebble();
+    queue = new MessageQueue();
     done();
   });
 
@@ -73,7 +73,6 @@ describe('MessageQueue', function () {
     it('sending a message should send a single message to Pebble', function (done) {
       var message = randomMessage();
       window.Pebble._on('appmessage', function (payload) {
-        console.log(payload);
         expect(identicalMessage(payload, message)).to.equal(true);
         done();
       });
@@ -144,6 +143,38 @@ describe('MessageQueue', function () {
       });
       queue.sendMessage(messages[0]);
       queue.sendMessage(messages[1]);
+    });
+
+    it('will nack after repeated fails', function (done) {
+      var message = randomMessage();
+      window.Pebble._on('appmessage', function (payload, ack, nack) {
+        expect(identicalMessage(payload, message)).to.equal(true);
+        nack();
+      });
+      queue.sendMessage(message, null, function () {
+        done();
+      });
+    });
+
+  });
+
+  describe('#inject', function () {
+
+    beforeEach(function () {
+      queue.inject();
+    });
+
+    afterEach(function () {
+      queue.cleanup();
+    });
+
+    it('should replace Pebble.sendAppMessage', function (done) {
+      var message = randomMessage();
+      window.Pebble._on('appmessage', function (payload) {
+        expect(identicalMessage(payload, message)).to.equal(true);
+        done();
+      });
+      window.Pebble.sendAppMessage(message);
     });
 
   });
