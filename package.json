@@ -4,11 +4,11 @@
   "description": "Pebble library for handling sending messages from JS to the watch.",
   "main": "lib/index.js",
   "scripts": {
-    "test": "karma start"
+    "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/smallstoneapps/js-message-queue.git"
+    "url": "https://github.com/smallstoneapps/js-message-queue.git"
   },
   "author": "Matthew Tole <pebble@matthewtole.com>",
   "license": "MIT",
