@@ -1,14 +1,17 @@
 var FakePebble = (function () {
 
   var _Pebble = null;
+
   var eventListeners = {
     ready: [],
     appmessage: [],
     webviewclosed: []
   };
+
   var eventHandlers = {
     appmessage: [],
-    notifications: []
+    notifications: [],
+    url: []
   };
 
   return {
@@ -49,6 +52,9 @@ var FakePebble = (function () {
   }
 
   function openURL(url) {
+    eventHandlers.openurl.forEach(function (handler) {
+      handler(url);
+    });
   }
 
   function reset() {
