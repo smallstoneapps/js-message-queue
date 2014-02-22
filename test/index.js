@@ -159,35 +159,9 @@ describe('MessageQueue', function () {
       });
     });
 
-  });
-
-  describe('#inject', function () {
-
-    beforeEach(function () {
-      MessageQueue.inject();
-    });
-
-    afterEach(function () {
-      MessageQueue.cleanup();
-    });
-
-    it('should replace Pebble.sendAppMessage', function (done) {
+    it('will ack if Pebble does not ack or nack', function (done) {
       var message = randomMessage();
-      Pebble.on('appmessage', function (payload) {
-        expect(identicalMessage(payload, message)).to.equal(true);
-        done();
-      });
-      Pebble.sendAppMessage(message);
-      expect(MessageQueue.size()).to.equal(1);
-    });
-
-  });
-
-  describe('#cleanup', function () {
-
-    it('does not throw an error if called without injecting', function (done) {
-      MessageQueue.cleanup();
-      done();
+      MessageQueue.sendAppMessage(message, done);
     });
 
   });
