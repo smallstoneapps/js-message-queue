@@ -2,6 +2,10 @@
 
 PebbleKit JS library for sending messages to your Pebble.
 
+## Advantages
+
+Automatically retries sending messages when they fail, and ensures that messages are sent in order (i.e. wait for first message to be acknowledged before sending the second message.
+
 ## Usage
 
 1. Include [js-message-queue.min.js](https://raw.github.com/smallstoneapps/js-message-queue/master/js-message-queue.min.js) in your Pebble JS file, either by copying and pasting it into the top of pebble-js-app.js, or by adding it to your JS build script.
