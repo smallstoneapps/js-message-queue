@@ -1,6 +1,6 @@
 {
-  "name": "js-message-queue",
-  "version": "0.1.0",
+  "name": "message-queue-pebble",
+  "version": "1.0.0",
   "description": "Pebble library for handling sending messages from JS to the watch.",
   "main": "lib/index.js",
   "scripts": {

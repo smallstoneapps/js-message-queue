@@ -1,0 +1,7 @@
+{
+  "extends": "pebble",
+  "globals": {
+    "define": true,
+    "Pebble": true
+  }
+}
